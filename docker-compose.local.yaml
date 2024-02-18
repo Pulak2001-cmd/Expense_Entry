@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  # expense-shared-modules:
+  #   extends:
+  #     file: ./docker-compose.dist.yaml
+  #     service: expense-shared-modules
+
+  expense-nginx:
+    extends:
+      file: ./docker-compose.dist.yaml
+      service: expense-nginx
+    volumes:
+      - ./dev-tools/local-proxy/default.conf:/etc/nginx/conf.d/default.conf
+
+  expense-postgres:
+    extends:
+      file: ./docker-compose.dist.yaml
+      service: expense-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  expense-mongo:
+    extends:
+      file: ./docker-compose.dist.yaml
+      service: expense-mongo
+    environment:
+      MONGODB_DATABASE_NAME: expense-local
+      MONGODB_ROOT_USER: mongodb
+      MONGODB_ROOT_PASSWORD: password
+
+  expense-backend:
+    extends:
+      file: ./docker-compose.dist.yaml
+      service: expense-backend
+    build:
+      target: development
+    environment:
+      NODE_ENV: development
+      POSTGRES_DATABASE: test-hk
+      SWAGGER_ENABLED: true
+    #   SSL_CERT_DIR: /var/ssl-certs
+    #   ENABLE_TLS: true
+    # volumes:
+    #   - ./credentials/ssl-certs/wild.hkerp.co:/var/ssl-certs:ro
+  
+  expense-frontend:
+    extends:
+      file: ./docker-compose.dist.yaml
+      service: expense-frontend
+
+
