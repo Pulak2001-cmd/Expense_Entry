@@ -7,12 +7,12 @@ services:
   #     file: ./docker-compose.dist.yaml
   #     service: expense-shared-modules
 
-  expense-nginx:
-    extends:
-      file: ./docker-compose.dist.yaml
-      service: expense-nginx
-    volumes:
-      - ./dev-tools/local-proxy/default.conf:/etc/nginx/conf.d/default.conf
+  # expense-nginx:
+  #   extends:
+  #     file: ./docker-compose.dist.yaml
+  #     service: expense-nginx
+  #   volumes:
+  #     - ./dev-tools/local-proxy/default.conf:/etc/nginx/conf.d/default.conf
 
   expense-postgres:
     extends:
@@ -46,9 +46,9 @@ services:
     # volumes:
     #   - ./credentials/ssl-certs/wild.hkerp.co:/var/ssl-certs:ro
   
-  expense-frontend:
-    extends:
-      file: ./docker-compose.dist.yaml
-      service: expense-frontend
+  # expense-frontend:
+  #   extends:
+  #     file: ./docker-compose.dist.yaml
+  #     service: expense-frontend
 
 

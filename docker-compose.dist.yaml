@@ -1,26 +1,25 @@
 version: '3.8'
 
 services:
-  
   # expense-shared-modules:
   #   container_name: expense-shared-modules
   #   build:
   #     dockerfile: Dockerfile
   #     context: .
-  
-  expense-nginx:
-    container_name: expense-nginx
-    image: nginx:alpine
-    volumes:
-      - ./dev-tools/local-proxy/secured.conf:/etc/nginx/conf.d/default.conf
-      - ./apps/frontend/public:/usr/share/nginx/html
-      - ./credentials/ssl-certs:/etc/nginx/ssl
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - expense-backend
-      - expense-frontend
+
+  # expense-nginx:
+  #   container_name: expense-nginx
+  #   image: nginx:alpine
+  #   volumes:
+  #     - ./dev-tools/local-proxy/secured.conf:/etc/nginx/conf.d/default.conf
+  #     - ./apps/frontend/public:/usr/share/nginx/html
+  #     - ./credentials/ssl-certs:/etc/nginx/ssl
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   depends_on:
+  #     - expense-backend
+  #     - expense-frontend
 
   expense-postgres:
     image: postgres:14.1-alpine
@@ -29,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - '5433:5433'
-    volumes: 
+    volumes:
       - ./.data/postgres:/var/lib/postgresql/data
 
   expense-mongo:
@@ -45,7 +44,7 @@ services:
       - ./.data/mongodb:/bitnami/mongodb
     ports:
       - 27017:27017
-  
+
   expense-backend:
     container_name: expense-backend
     build:
@@ -59,6 +58,7 @@ services:
       - backend_node_modules:/expense/apps/backend/node_modules
       - ./.data/backend:/expense/data
       - ./credentials:/usr/credentials
+      # 57 line made by Joy previouly it was (- ./)
     # Run in Debug Mode: npm run start:debug --> Don't forget to start your vscode debugger!
     # Run in dev Mode: npm run start:dev
     # command: npm run start:debug
@@ -71,7 +71,7 @@ services:
     #     reservations:
     #       cpus: '0.25'
     #       memory: 700M
-    depends_on: 
+    depends_on:
       - expense-postgres
       # - expense-mongo
     environment:
@@ -96,25 +96,23 @@ services:
       AWS_S3_REGION: ap-south-1
       AWS_BUCKET_NAME: expense-bucket
 
-
     ports:
       - 8881:3000
       - 9229:9229 # debugging port
-  
 
-  expense-frontend:
-    container_name: expense-frontend
-    build:
-      dockerfile: DockerFile
-      context: apps/frontend
-      target: development
-    volumes:
-      - frontend_node_modules:/usr/src/app/node_modules
-      - ./apps/frontend/ui:/usr/src/app/ui
-    environment:
-      NODE_ENV: development
-      NODE_PORT: 3000
 
-    ports:
-      - 8880:3000
-  
+  # expense-frontend:
+  #   container_name: expense-frontend
+  #   build:
+  #     dockerfile: DockerFile
+  #     context: apps/frontend
+  #     target: development
+  #   volumes:
+  #     - frontend_node_modules:/usr/src/app/node_modules
+  #     - ./apps/frontend/ui:/usr/src/app/ui
+  #   environment:
+  #     NODE_ENV: development
+  #     NODE_PORT: 3000
+
+  #   ports:
+  #     - 8880:3000
