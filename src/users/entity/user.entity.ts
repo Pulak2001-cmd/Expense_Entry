@@ -18,10 +18,13 @@ export class UserEntity {
   @PrimaryGeneratedColumn('increment')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
   username: string;
 
-  @Column()
+  @Column({ nullable: false })
+  name: string;
+
+  @Column({ nullable: false })
   password: string;
 
   @CreateDateColumn()
@@ -40,4 +43,15 @@ export class UserEntity {
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+  @BeforeInsert()
+  async toLowerCase() {
+    this.username = this.username.toLowerCase();
+  }
+  async checkPassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
+
+  // async encryption() {
+  //   return (this.id = encryptId(this.id));
+  // }
 }

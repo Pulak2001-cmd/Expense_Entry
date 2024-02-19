@@ -5,6 +5,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { databaseConnectionConfig } from './configuration/database';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './configuration';
+import { UserController } from './users/controller/user.controller';
+import { ExpenceController } from './expence/controller/expence.controller';
+import { AuthController } from './auth/auth.controller';
+import { UserService } from './users/service/user.service';
+import { ExpenceService } from './expence/service/expence.service';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -18,7 +24,12 @@ import configuration from './configuration';
       imports: undefined,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [
+    AppController,
+    UserController,
+    ExpenceController,
+    AuthController,
+  ],
+  providers: [AppService, UserService, ExpenceService, AuthService],
 })
 export class AppModule {}
