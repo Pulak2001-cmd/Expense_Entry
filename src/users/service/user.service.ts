@@ -15,6 +15,7 @@ import {
   LessThan,
   MoreThan,
   Not,
+  FindOneOptions,
   Repository,
 } from 'typeorm';
 import { UserEntity } from '../entity/user.entity';
@@ -39,5 +40,9 @@ export class UserService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  findOneUserBy(options: FindOneOptions<UserEntity>) {
+    return this.userRepository.findOne(options);
   }
 }

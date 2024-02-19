@@ -6,7 +6,9 @@ export type JWTAuthClaim = {
   roles: string[];
 };
 
-export type AccessTokenClaim = JWTAuthClaim;
+export type AccessTokenClaim = {
+  uid: string;
+};
 
 export type RefreshTokenClaim = {
   uid: string;

@@ -54,4 +54,9 @@ export class UserEntity {
   // async encryption() {
   //   return (this.id = encryptId(this.id));
   // }
+  // @OneToMany(
+  //   () => UserRoleMappingEntity,
+  //   (userRoleMapping) => userRoleMapping.user,
+  // )
+  // userRoleMappings: UserRoleMappingEntity[];
 }

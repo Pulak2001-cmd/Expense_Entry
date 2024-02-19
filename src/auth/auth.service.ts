@@ -31,7 +31,7 @@ export class AuthService {
     try {
       const user = await this.usersRepository.findOne({
         where: { username: dto.username },
-        relations: { userRoleMappings: { role: true } },
+        // relations: { userRoleMappings: { role: true } },
       });
       if (!user) throw new UnauthorizedException('Please signup first');
 
@@ -40,7 +40,7 @@ export class AuthService {
         throw new HttpException('Wrong Password', HttpStatus.BAD_REQUEST);
       }
 
-      user.roles = user.userRoleMappings.map((v) => v.role.roleName);
+      // user.roles = user.userRoleMappings.map((v) => v.role.roleName);
 
       const accessToken = await this.generateAccessToken(user);
       const refreshToken = await this.generateRefreshToken(user);
@@ -59,7 +59,7 @@ export class AuthService {
   async generateAccessToken(user: UserEntity): Promise<string> {
     const claim: AccessTokenClaim = {
       uid: user.id,
-      roles: user.roles,
+      // roles: user.roles,
     };
     const accessToken = this.jwtService.sign(claim, {
       secret: this.configService.get('jwt.access_token_secret'),
