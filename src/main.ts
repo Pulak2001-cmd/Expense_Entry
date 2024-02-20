@@ -7,8 +7,8 @@ async function bootstrap() {
   const globalPreset = process.env.GLOBAL_PRESET || '';
   if (process.env.SWAGGER_ENABLED === 'true') {
     const config = new DocumentBuilder()
-      .setTitle('HK-Pragati')
-      .setDescription('Hk-Pragati API description')
+      .setTitle('Expense Entry ')
+      .setDescription('Expense Entry API description')
       .setVersion('1.0')
       .addBearerAuth()
       .build();

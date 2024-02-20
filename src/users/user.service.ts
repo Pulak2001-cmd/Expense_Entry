@@ -10,6 +10,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   Between,
+  FindOneOptions,
   In,
   IsNull,
   LessThan,
@@ -39,5 +40,9 @@ export class UserService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  findOneUserBy(options: FindOneOptions<UserEntity>) {
+    return this.userRepository.findOne(options);
   }
 }
