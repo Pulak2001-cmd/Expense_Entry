@@ -38,6 +38,7 @@ export class AuthService {
             const refreshToken = await this.generateRefreshToken(user);
             delete user.password;
             return { accessToken, refreshToken, user };
+            
 
         }
         catch (err) {
